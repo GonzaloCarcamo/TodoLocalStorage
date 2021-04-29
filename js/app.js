@@ -8,7 +8,7 @@ let ideas = [];
 eventListeners();
 
 function eventListeners() {
-        form.addEventListener('click', addIdea);
+        form.addEventListener('submit', addIdea);
 }
 
 
@@ -25,7 +25,19 @@ function addIdea(e) {
                 return; // block code
         }
 
-        console.log('agregando')
+        const ideaObj = {
+                id: Date.now(),
+                idea
+        }
+
+        // Add ideas
+        ideas = [...ideas, ideaObj];
+        
+        // Create HTML
+        createHTML();
+
+        // Reset form
+        form.reset();
 }
 
 // Show error message
@@ -40,4 +52,26 @@ function showError(error) {
                 messageError.remove();
         }, 2000)
 
+}
+
+// Create HTML
+function createHTML() {
+
+        cleanHTML();
+
+        if(ideas.length > 0){
+                ideas.forEach( idea => {
+                        // HTML
+                        const li = document.createElement('li');
+                        li.textContent = idea.idea;
+                        li.classList.add('list-group-item');
+                        list.appendChild(li);
+                })
+        }
+}
+
+function cleanHTML() {
+        while(list.firstChild){
+                list.removeChild(list.firstChild);
+        }
 }

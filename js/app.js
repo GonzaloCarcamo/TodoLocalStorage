@@ -69,10 +69,25 @@ function createHTML() {
 
         if(ideas.length > 0){
                 ideas.forEach( idea => {
+                        // Add a button for delete idea
+                        const btnDelete = document.createElement('a');
+                        btnDelete.classList.add('m-3')
+                        btnDelete.style.cursor = 'pointer';
+                        btnDelete.style.textDecoration = 'none';
+                        btnDelete.innerHTML = 'X';
+
+                        // Delete function
+                        btnDelete.onclick = () => {
+                                deleteIdea(idea.id);
+                        }
+
                         // HTML
                         const li = document.createElement('li');
                         li.textContent = idea.idea;
                         li.classList.add('list-group-item');
+
+                        // button
+                        li.appendChild(btnDelete);
                         list.appendChild(li);
                 })
         }
@@ -88,4 +103,9 @@ function cleanHTML() {
         while(list.firstChild){
                 list.removeChild(list.firstChild);
         }
+}
+
+function deleteIdea(id) {
+        ideas = ideas.filter(idea => idea.id !== id);
+        createHTML();
 }

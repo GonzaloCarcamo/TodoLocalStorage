@@ -8,7 +8,15 @@ let ideas = [];
 eventListeners();
 
 function eventListeners() {
+        // When an user adds an idea
         form.addEventListener('submit', addIdea);
+
+        // When document is ready
+        document.addEventListener('DOMContentLoaded', () => {
+                ideas = JSON.parse(localStorage.getItem('ideas')) || [];
+
+                createHTML();
+        })
 }
 
 
@@ -68,6 +76,12 @@ function createHTML() {
                         list.appendChild(li);
                 })
         }
+
+        storage();
+}
+
+function storage() {
+        localStorage.setItem('ideas', JSON.stringify(ideas));
 }
 
 function cleanHTML() {
